@@ -8,11 +8,10 @@ interface ICard {
 
 const Card = (props: ICard) => {
   return (
-    <div className={styles.Card}>
-      <h2>{props.title}</h2>
-
-      <div className={styles.content}>{props.children}</div>
-    </div>
+    <table className={styles.Card}>    
+      <h2 className={styles.title}>{props.title}</h2>      
+      <div className={styles.content}>{props.children}</div>      
+    </table>
   );
 };
 

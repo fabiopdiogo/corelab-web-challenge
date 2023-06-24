@@ -1,0 +1,43 @@
+.inputCard {
+  display: flex;
+  flex-direction: column;  
+  border-radius: 10px;  
+  box-shadow: 1px 1px 1px 1px#808080;
+
+  text-align: left;
+  background-color: white;
+  color: inherit;
+  text-decoration: none;
+ 
+  
+  width: 530.5185546875px;
+  height: 103.364501953125px;
+  top: 81.8118896484375px;
+  left: 443.29541015625px;
+
+  button{
+    display: none;
+  }
+}
+
+.title {  
+  padding: 1.0rem;
+  border: none;
+  border-radius: 10px; 
+  outline:none;
+  ::placeholder{
+    font-weight: bold;
+  }  
+}
+
+
+.note {    
+  padding: 1.0rem;
+  border-top: 2px solid #808080;
+  border-right: none;
+  border-bottom: none;
+  border-left: none;
+  border-bottom-left-radius: 10px; 
+  border-bottom-right-radius: 10px; 
+  outline:none;
+}

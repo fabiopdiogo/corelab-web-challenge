@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from "./Header.module.css";
+import styles from "./Header.module.scss";
 
 import Search from './Search/Search';
 
@@ -9,9 +9,7 @@ interface Props{
 }
 
 const Header = () => {
-  const handleClick = (data : void) =>{
-   
-  }
+  
   return (
     <>    
       <header className={styles.header}>     

@@ -1,4 +1,5 @@
-import styles from './Search.module.css'
+import styles from './Search.module.scss'
+import { useForm } from 'react-hook-form'
 
 interface ISearch {
   placeholder: string;
@@ -6,13 +7,21 @@ interface ISearch {
 }
 
 const Search = (props: ISearch) => {
+  const { register, handleSubmit} = useForm({
+    mode: 'onChange',
+  });
+
+  const handleSearch = (data : any) => {
+    console.log('submit', data);
+  }
+
   return (
-    <div className={styles.searchBar}>      
-      <input type="text" placeholder={props.placeholder} /> 
-      <a href="#">
-      <img src="search.svg" alt="Lupa" />
-      </a>   
-    </div>
+    <form  onSubmit={handleSubmit(handleSearch)} className={styles.searchBar}>      
+      <input type="text" placeholder={props.placeholder} {...register('todo')} /> 
+      <button type="submit">
+        <img src="search.svg" alt="Lupa" />
+      </button>   
+    </form>
 
   );
 };

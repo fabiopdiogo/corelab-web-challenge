@@ -21,8 +21,14 @@
   outline:none;
   background: none  ;
 }
+.searchBar button{
+
+  border:none;
+  outline:none;
+  background: none  ;
+}
 @media(max-width:880px){
  .searchBar{
-   display: none;
+   
  }
 }
