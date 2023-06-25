@@ -1,4 +1,7 @@
 .Card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   text-align: left;
   background-color: white;
   color: inherit;
@@ -20,27 +23,34 @@
     color: #0070f3;
     border-color: #0070f3;
   }
-
-  h2 {
-    margin: 0 0 1rem 0;
-    font-size: 1.5rem;
-
-  }
-
-  p {
-    margin: 0;
-    font-size: 1rem;
-    line-height: 1.5;
+  img{
+    cursor: pointer;
   }
 }
 
 .title{  
+  margin: 0 0 1rem 0;
+  font-size: 1.5rem;
   padding: 1.5rem;
   padding-bottom: 0rem;
 }
 
-.content{  
+.note{  
+  margin: 0;
+  font-size: 1rem;
+  line-height: 1.5;
   padding: 1.5rem;
   border-top: 1px solid gray;
   border-top-width: 100%;
+}
+
+.actions{
+  display: flex;  
+  justify-content: space-between;
+  padding: 20px;  
+}
+
+.edits{
+  display: flex;  
+  gap:15px;
 }

@@ -10,15 +10,37 @@ interface IBody {
 }
 
 const Body = ({taskList, setTaskList}: IBody) => {
-  
+  const [editNoteState, setEditNoteState] = useState(false)
+  const [taskToUpdate, setTaskToUpdate] = useState<INote | null>(null);
+
+  const deleteNote = (id: number) => {
+    setTaskList(
+      taskList.filter((task) =>{
+          return task.id !== id;
+        })
+    );
+  };
+
+  const editNote = (task: INote): void =>{
+    setEditNoteState(true)
+    setTaskToUpdate(task)
+  }
+  const editColor = (task: INote): void =>{
+  }
+
   return (
     <div className={styles.Container}>
       <CreateNote 
       taskList={taskList}
       setTaskList={setTaskList}/>
       
-      <div className={styles.Cards}>  
-
+      <div className={styles.Cards}>
+        <Card 
+        taskList={taskList}
+        handleDelete={deleteNote} 
+        handleEdit={editNote}
+        editNoteState={editNoteState}
+        />
       </div>
     </div>
   )
