@@ -4,6 +4,7 @@ import styles from "./Card.module.scss";
 interface ICard {
   title: string;
   children: ReactNode;
+  color: string;
 }
 
 const Card = (props: ICard) => {
