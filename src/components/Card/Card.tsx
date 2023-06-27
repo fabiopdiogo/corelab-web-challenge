@@ -41,16 +41,18 @@ interface ICard{
 
 const Card = ({ id, note, title,color,favorite,handleDelete,handleUpdate,handleColor }: ICard) => {
   const [editNote, setEditNote] = useState(false);
-  const[noteNew, setNote] = useState<string>(note);
+  const [noteNew, setNote] = useState<string>(note);
   const [showModal, setShowModal] = useState(false);
   const [colorNew, setColorNew] = useState("#ffffff");
+  const [favoriteNew,setFavoriteNew] = useState<boolean>(favorite);
+
   const handleEdit = (): void =>{
     setEditNote(true)
   }
 
   const handleSaveEdit = () : void => {
     setEditNote(false)    
-    handleUpdate(id,title,noteNew, colorNew, favorite)
+    handleUpdate(id,title,noteNew, colorNew, favoriteNew)
   }
   const handleClickColor = () => {
     console.log("clicou")
@@ -60,7 +62,7 @@ const Card = ({ id, note, title,color,favorite,handleDelete,handleUpdate,handleC
   const handleColorSelection = (color: string) => {
     console.log('Cor selecionada:', color);
     setColorNew(color)
-    handleUpdate(id,title,noteNew, colorNew, favorite)    
+    handleUpdate(id,title,noteNew, colorNew, favoriteNew)    
     setShowModal(false);
   };
 
@@ -68,12 +70,19 @@ const Card = ({ id, note, title,color,favorite,handleDelete,handleUpdate,handleC
   return (
       <StyledCard color={colorNew}>
         <div>
-            <h2 className={styles.title}>{title}</h2>       
-            <p className={styles.note}>
-                {!editNote && noteNew}
-                {editNote && <EditNote id={id} note={noteNew} onSave={handleSaveEdit} setNote={setNote} />}
-            </p>  
+          <div className={styles.title}>
+              <h2>{title}</h2>  
+              <p onClick={() => setFavoriteNew(!favoriteNew)}> 
+                  {!favoriteNew && <img src="star.svg"></img>}
+                  {favoriteNew && <img src="checkedstar.svg"></img>}
+              </p>
+          </div>                 
+          <p className={styles.note}>
+            {!editNote && noteNew}
+            {editNote && <EditNote id={id} note={noteNew} onSave={handleSaveEdit} setNote={setNote} />}
+          </p>  
         </div>
+        
         <div className={styles.actions}>
             <div className={styles.edits}>
               <img src="edit.svg" onClick={() => handleEdit()} />               
