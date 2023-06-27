@@ -1,0 +1,17 @@
+.modal{
+  display: flex;
+  box-sizing: border-box;
+  border: 1px solid black;
+  padding: 1px;
+  gap: 5px;
+  position: relative;
+  top: 40px;
+  right: 30px;
+}
+
+.colorOption{ 
+
+  border-radius: 10px;
+  width: 20px;
+}
+

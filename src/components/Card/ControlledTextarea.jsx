@@ -1,26 +1,27 @@
 import { useState } from 'react';
-import { useController } from 'react-hook-form'
+import { useController } from 'react-hook-form';
 
-import style from "./textarea.module.scss"
+import style from "./textarea.module.scss";
 
-const ControlledTextarea = ({name, control, defaultValue='', ...props}) => {
-  const [inputValue, setInputValue] = useState(defaultValue);
-  const{
-    field: { onChange }
-  } = useController({ name, control, defaultValue })
+const ControlledTextarea = ({ name, control, defaultValue, onBlur,...props}) => {
+  //const [inputValue, setInputValue] = useState(defaultValue);
+  const {
+    field: { value,onChange }
+  } = useController({ name, control, defaultValue });
 
   const handleBlur = () => {
-    onChange(inputValue);
-    console.log(inputValue)
+    onChange(value);
+    onBlur(value)
+    console.log(value)
   };
 
   const handleChange = (event) => {
-    setInputValue(event.target.value);
+    onChange(event.target.value);
   };
 
-  return(
-    <textarea {...props} value={inputValue} onChange={handleChange} onBlur={handleBlur} className={style.textarea}/>
-  )
-}
+  return (
+    <textarea {...props} value={value} onChange={handleChange} onBlur={handleBlur} className={style.textarea} />
+  );
+};
 
-export default ControlledTextarea
+export default ControlledTextarea;

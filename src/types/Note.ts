@@ -2,5 +2,6 @@ export interface INote{
   id: number;
   title: string;
   note: string;
-  color?:string;
+  color:string;
+  favorite:boolean
 }

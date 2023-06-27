@@ -16,28 +16,21 @@ const CreateNote = ({taskList, setTaskList, task,handleUpdate}: Props) => {
   const[id, setId] = useState<number>(0);
   const[title, setTitle] = useState<string>("");
   const[note, setNote] = useState<string>("");
+  const[color, setColor] = useState<string>("#ffffff");
+  const[favorite, setFavorite] = useState<boolean>(false);
 
-  useEffect(() => {
-    if(task){
-      setId(task.id);
-      setTitle(task.title);
-      setNote(task.note);
-    }
-  }, [task])
+
 
   const addTaskHandler = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    if(handleUpdate){
-      handleUpdate(id, title, note)
-    }else{
+     e.preventDefault();    
       const id = Math.floor(Math.random() * 1000)
-      const newTask: INote = {id, title, note}
+      const newTask: INote = {id, title, note, color,favorite}
       console.log(newTask)
       setTaskList!([...taskList, newTask]);
       console.log(taskList)
       setTitle("")
       setNote("")
-    }
+    
   }
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {

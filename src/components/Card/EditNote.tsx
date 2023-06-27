@@ -1,35 +1,34 @@
 import { useForm } from 'react-hook-form'
-import { joiResolver } from '@hookform/resolvers/joi'
-
-import { noteSchema } from '../../modules/note/note.schema'
 import ControlledTextarea from "./ControlledTextarea"
-import style from "./EditNote.module.scss"
-import { Dispatch, SetStateAction } from 'react'
+import styles from "./EditNote.module.scss"
 
 interface Props{
   id: number;
   note: string;
-  setEditNoteState?: Dispatch<SetStateAction<boolean>>
+  onSave:() => void;
+  setNote:(data: string) => void;
 }
-const EditNote = ({id,note,setEditNoteState}: Props) => {
+const EditNote = ({id,note,onSave,setNote}: Props) => {
   const {control, handleSubmit, formState: {isValid}} = useForm({
 
   })
 
-  const handleSaveEdit = (data : any) => {
-    console.log(data);    
+  const handleSaveEdit = (data: any) => {
+   onSave();
+   setNote(data)   
+   console.log(data);
   }
-
   return (
-      <form onSubmit={handleSubmit(handleSaveEdit)}>
+      <form onSubmit={handleSubmit(handleSaveEdit)} >
         <ControlledTextarea
           placeholder = "Digite sua mensagem"
           rows="4"
           control={control}
           name="text"
           defaultValue={note}
+          onBlur={handleSaveEdit}
         />
-        <button type="submit"></button>
+        <button type="submit" className={styles.button}></button>
       </form>
    )
 }

@@ -1,42 +1,92 @@
-import React, { ReactNode } from "react";
+import React, { ReactNode, useState } from "react";
 import styles from "./Card.module.scss";
+import styled from "styled-components";
 import { INote } from "../../types/Note";
 import EditNote from "./EditNote"
-interface ICard {
-  taskList: INote[];
-  editNoteState: boolean;
-  handleDelete(id: number): void;
-  handleEdit(task: INote): void;
+import ModalColor from "./ModalColor/ModalColor";
+
+const StyledCard = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  text-align: left;
+  background-color: ${(props) => props.color};
+  color: inherit;
+  text-decoration: none;
+ 
+  
+  transition: color 0.15s ease, border-color 0.15s ease;
+  width: 390px;
+  height: 437.5882568359375px;
+  top: 224.4471435546875px;
+  left: 105.284423828125px;
+  border-radius: 25px;
+  box-shadow: 1px 1px #808080;
+
+
+  img{
+    cursor: pointer;
+  }
+`
+interface ICard{
+    id:number; 
+    note:string;
+    title:string;
+    color:string;
+    favorite:boolean;
+    handleDelete(id: number): void;
+    handleUpdate(id: number,string:string, note:string,color: string, favorite: boolean): void;
+    handleColor(id: number,string:string, note:string,color: string, favorite: boolean): void;
 }
 
-const Card = ({ taskList, handleDelete, handleEdit, editNoteState }: ICard) => {
+const Card = ({ id, note, title,color,favorite,handleDelete,handleUpdate,handleColor }: ICard) => {
+  const [editNote, setEditNote] = useState(false);
+  const[noteNew, setNote] = useState<string>(note);
+  const [showModal, setShowModal] = useState(false);
+  const [colorNew, setColorNew] = useState("#ffffff");
+  const handleEdit = (): void =>{
+    setEditNote(true)
+  }
+
+  const handleSaveEdit = () : void => {
+    setEditNote(false)    
+    handleUpdate(id,title,noteNew, colorNew, favorite)
+  }
+  const handleClickColor = () => {
+    console.log("clicou")
+    setShowModal(!showModal);
+    console.log(showModal)
+  };
+  const handleColorSelection = (color: string) => {
+    console.log('Cor selecionada:', color);
+    setColorNew(color)
+    handleUpdate(id,title,noteNew, colorNew, favorite)    
+    setShowModal(false);
+  };
+
+
   return (
-    <>
-      {taskList.length > 0 ? (
-        taskList.map((task)=>(
-          <div className={styles.Card}>
-            <div>
-                <h2 className={styles.title}>{task.title}</h2>       
-                <p className={styles.note}>
-                   {!editNoteState && task.note}
-                   {editNoteState && <EditNote id={task.id} note={task.note}/>}
-                </p>  
+      <StyledCard color={colorNew}>
+        <div>
+            <h2 className={styles.title}>{title}</h2>       
+            <p className={styles.note}>
+                {!editNote && noteNew}
+                {editNote && <EditNote id={id} note={noteNew} onSave={handleSaveEdit} setNote={setNote} />}
+            </p>  
+        </div>
+        <div className={styles.actions}>
+            <div className={styles.edits}>
+              <img src="edit.svg" onClick={() => handleEdit()} />               
+              <img src="color.svg"  onClick={() => handleClickColor()}/>
+              {showModal && (
+                 <ModalColor handleColorSelection={handleColorSelection} />
+              )}
             </div>
-            <div className={styles.actions}>
-                <div className={styles.edits}>
-                  <img src="edit.svg" onClick={() => handleEdit(task)} />               
-                  <a href=""><img src="color.svg" onClick={() => {}} /> </a>
-                </div>
-                <div>
-                  <a href=""><img src="remove.svg" className="bi bi-trash" onClick={() => {handleDelete(task.id)}} />   </a>
-                </div>                
-           </div>
-          </div>
-        ))
-      ) : (
-        <p>Não há tarefas adicionadas!</p>
-      )}
-    </>
+            <div>
+              <img src="remove.svg"  onClick={() => {handleDelete(id)}} />
+            </div>                
+        </div>
+      </StyledCard>
   );
 };
 
