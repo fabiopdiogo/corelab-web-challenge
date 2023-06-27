@@ -3,12 +3,11 @@ import ControlledTextarea from "./ControlledTextarea"
 import styles from "./EditNote.module.scss"
 
 interface Props{
-  id: number;
   note: string;
   onSave:() => void;
   setNote:(data: string) => void;
 }
-const EditNote = ({id,note,onSave,setNote}: Props) => {
+const EditNote = ({note,onSave,setNote}: Props) => {
   const {control, handleSubmit, formState: {isValid}} = useForm({
 
   })
@@ -16,7 +15,6 @@ const EditNote = ({id,note,onSave,setNote}: Props) => {
   const handleSaveEdit = (data: any) => {
    onSave();
    setNote(data)   
-   console.log(data);
   }
   return (
       <form onSubmit={handleSubmit(handleSaveEdit)} >

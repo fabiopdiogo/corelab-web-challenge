@@ -5,6 +5,13 @@
   align-items: center;
   padding-top: 20px;  
 }
+.ContainerCards{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding-top: 20px;  
+}
 
 .Cards{
   display: grid;

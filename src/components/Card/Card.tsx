@@ -35,16 +35,15 @@ interface ICard{
     color:string;
     favorite:boolean;
     handleDelete(id: number): void;
-    handleUpdate(id: number,string:string, note:string,color: string, favorite: boolean): void;
-    handleColor(id: number,string:string, note:string,color: string, favorite: boolean): void;
+    handleNote(id: number,string:string, note:string,color: string, favorite: boolean): void;
 }
 
-const Card = ({ id, note, title,color,favorite,handleDelete,handleUpdate,handleColor }: ICard) => {
-  const [editNote, setEditNote] = useState(false);
+const Card = ({ id, note, title,color,favorite,handleDelete, handleNote }: ICard) => {
+  const [colorNew, setColorNew] = useState(color);
+  const [favoriteNew,setFavoriteNew] = useState<boolean>(favorite);
   const [noteNew, setNote] = useState<string>(note);
   const [showModal, setShowModal] = useState(false);
-  const [colorNew, setColorNew] = useState("#ffffff");
-  const [favoriteNew,setFavoriteNew] = useState<boolean>(favorite);
+  const [editNote, setEditNote] = useState(false);
 
   const handleEdit = (): void =>{
     setEditNote(true)
@@ -52,7 +51,7 @@ const Card = ({ id, note, title,color,favorite,handleDelete,handleUpdate,handleC
 
   const handleSaveEdit = () : void => {
     setEditNote(false)    
-    handleUpdate(id,title,noteNew, colorNew, favoriteNew)
+    handleNote(id,title,noteNew, colorNew, favoriteNew)
   }
   const handleClickColor = () => {
     console.log("clicou")
@@ -62,24 +61,30 @@ const Card = ({ id, note, title,color,favorite,handleDelete,handleUpdate,handleC
   const handleColorSelection = (color: string) => {
     console.log('Cor selecionada:', color);
     setColorNew(color)
-    handleUpdate(id,title,noteNew, colorNew, favoriteNew)    
+    handleNote(id,title,noteNew, colorNew, favoriteNew)    
     setShowModal(false);
   };
-
+  const handleFavorite = () => {
+    handleNote(id,title,noteNew, colorNew, favoriteNew)    
+  };
 
   return (
       <StyledCard color={colorNew}>
         <div>
           <div className={styles.title}>
               <h2>{title}</h2>  
-              <p onClick={() => setFavoriteNew(!favoriteNew)}> 
+              <p onClick={() =>{
+                 setFavoriteNew(!favoriteNew)
+                 handleFavorite()
+                 }
+                 }> 
                   {!favoriteNew && <img src="star.svg"></img>}
                   {favoriteNew && <img src="checkedstar.svg"></img>}
               </p>
           </div>                 
           <p className={styles.note}>
             {!editNote && noteNew}
-            {editNote && <EditNote id={id} note={noteNew} onSave={handleSaveEdit} setNote={setNote} />}
+            {editNote && <EditNote note={noteNew} onSave={handleSaveEdit} setNote={setNote} />}
           </p>  
         </div>
         

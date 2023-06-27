@@ -10,6 +10,19 @@ interface IBody {
 }
 
 const Body = ({taskList, setTaskList}: IBody) => {
+
+
+  const updateNote = (id: number, title: string, note: string, color: string, favorite: boolean) => {
+    
+    const updatedNote: INote = { id, title, note, color, favorite };
+  
+    const updatedItems = taskList.map((task) => {
+      return task.id === updatedNote.id ? updatedNote : task;
+    });
+  
+    setTaskList(updatedItems);
+    console.log(taskList);
+  }
   
   const deleteNote = (id: number) => {
     setTaskList(
@@ -18,57 +31,52 @@ const Body = ({taskList, setTaskList}: IBody) => {
       })
     );
   };
-
-  const updateNote = (id: number, title:string, note:string, color:string, favorite: boolean) => {
-
-    const updatedTask: INote = {id,title, note, color, favorite}
-
-    const updatedItems = taskList.map((task) => {
-      return task.id === updatedTask.id ? updatedTask : task;
-    });
-
-    setTaskList(updatedItems);
-    console.log(taskList)
-  }
-
-
-  const editColor = (id: number, title:string, note:string, color:string, favorite: boolean): void =>{
-    const updatedTask: INote = {id,title, note, color, favorite}
-
-    const updatedItems = taskList.map((task) => {
-      return task.id === updatedTask.id ? updatedTask : task;
-    });
-
-    setTaskList(updatedItems);
-    console.log(taskList)
-  }
-
+  
   return (
     <div className={styles.Container}>
       <CreateNote 
       taskList={taskList}
       setTaskList={setTaskList}/>
+
           <div className={styles.Cards}>
-            {taskList.length > 0 ? (
-              taskList.map((note)=>(
+            {taskList.length > 0 && (
+              <>
+                {/* Mapear notas favoritas */}
+                {taskList.filter((note) => note.favorite === true).map((note) => (
                   <div>          
-                      <Card 
-                        id={note.id}
-                        note={note.note}
-                        title={note.title}
-                        color=""
-                        favorite={false}
-                        handleDelete={deleteNote}
-                        handleUpdate={updateNote}  
-                        handleColor={editColor}                      
-                      />
+                    <Card 
+                      data-favorite="true"
+                      id={note.id}
+                      note={note.note}
+                      title={note.title}
+                      color="#ffffff"
+                      favorite={note.favorite}
+                      handleDelete={deleteNote}
+                      handleNote={updateNote}                     
+                    />
                   </div>
-              ))
-            ) : (
-              <p>Não há tarefas adicionadas!</p>
+                ))}
+
+                {/* Mapear notas não favoritas */}
+                {taskList.filter((note) => note.favorite === false).map((note) => (
+                  <div>          
+                    <Card 
+                      id={note.id}
+                      note={note.note}
+                      title={note.title}
+                      color="#ffffff"
+                      favorite={note.favorite }
+                      handleDelete={deleteNote}
+                      handleNote={updateNote}                    
+                    />
+                  </div>
+                ))}
+              </>
             )}
           </div>
-        
+      
+
+
     </div>
   )
 }

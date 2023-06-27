@@ -12,7 +12,6 @@ const ControlledTextarea = ({ name, control, defaultValue, onBlur,...props}) => 
   const handleBlur = () => {
     onChange(value);
     onBlur(value)
-    console.log(value)
   };
 
   const handleChange = (event) => {
