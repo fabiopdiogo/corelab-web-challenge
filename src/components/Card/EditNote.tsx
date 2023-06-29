@@ -2,18 +2,27 @@ import { useForm } from 'react-hook-form'
 import ControlledTextarea from "./ControlledTextarea"
 import styles from "./EditNote.module.scss"
 
+import { baseURL } from "../../utils/constant";
+import axios from "axios"
+
+
 interface Props{
+  id:number; 
   note: string;
   onSave:() => void;
   setNote:(data: string) => void;
+  setUpdateUI: React.Dispatch<React.SetStateAction<boolean>>;
 }
-const EditNote = ({note,onSave,setNote}: Props) => {
-  const {control, handleSubmit, formState: {isValid}} = useForm({
-
-  })
+const EditNote = ({id,note,onSave,setNote,setUpdateUI}: Props) => {
+  const {control, handleSubmit, formState: {isValid}} = useForm({})
 
   const handleSaveEdit = (data: any) => {
+    axios.put(`${baseURL}/update/${id}`,{note:data}).then((res)=>{
+      console.log(res.data);
+      setUpdateUI((prevState) => !prevState)
+    })  
    onSave();
+   console.log(data)
    setNote(data)   
   }
   return (

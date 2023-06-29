@@ -35,10 +35,11 @@ interface ICard{
     color:string;
     favorite:boolean;
     handleDelete(id: number): void;
-    handleNote(id: number,string:string, note:string,color: string, favorite: boolean): void;
+    //handleNote(id: number,string:string, note:string,color: string, favorite: boolean): void;
+    setUpdateUI: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const Card = ({ id, note, title,color,favorite,handleDelete, handleNote }: ICard) => {
+const Card = ({ id, note, title,color,favorite,handleDelete, setUpdateUI }: ICard) => {
   const [colorNew, setColorNew] = useState(color);
   const [favoriteNew,setFavoriteNew] = useState<boolean>(favorite);
   const [noteNew, setNote] = useState<string>(note);
@@ -51,7 +52,7 @@ const Card = ({ id, note, title,color,favorite,handleDelete, handleNote }: ICard
 
   const handleSaveEdit = () : void => {
     setEditNote(false)    
-    handleNote(id,title,noteNew, colorNew, favoriteNew)
+    console.log({id,noteNew});
   }
   const handleClickColor = () => {
     console.log("clicou")
@@ -61,11 +62,10 @@ const Card = ({ id, note, title,color,favorite,handleDelete, handleNote }: ICard
   const handleColorSelection = (color: string) => {
     console.log('Cor selecionada:', color);
     setColorNew(color)
-    handleNote(id,title,noteNew, colorNew, favoriteNew)    
     setShowModal(false);
   };
   const handleFavorite = () => {
-    handleNote(id,title,noteNew, colorNew, favoriteNew)    
+    //handleNote(id,title,noteNew, colorNew, favoriteNew)    
   };
 
   return (
@@ -75,7 +75,6 @@ const Card = ({ id, note, title,color,favorite,handleDelete, handleNote }: ICard
               <h2>{title}</h2>  
               <p onClick={() =>{
                  setFavoriteNew(!favoriteNew)
-                 handleFavorite()
                  }
                  }> 
                   {!favoriteNew && <img src="star.svg"></img>}
@@ -84,7 +83,7 @@ const Card = ({ id, note, title,color,favorite,handleDelete, handleNote }: ICard
           </div>                 
           <p className={styles.note}>
             {!editNote && noteNew}
-            {editNote && <EditNote note={noteNew} onSave={handleSaveEdit} setNote={setNote} />}
+            {editNote && <EditNote id={id} note={noteNew} setUpdateUI={setUpdateUI} onSave={handleSaveEdit} setNote={setNote} />}
           </p>  
         </div>
         

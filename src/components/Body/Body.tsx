@@ -1,42 +1,42 @@
 import Card from '../Card/Card';
 import styles from './Body.module.scss'
-import { useState } from 'react';
+import { Dispatch, SetStateAction, useState } from 'react';
+
+import { baseURL } from "../../utils/constant";
+import axios from "axios"
+
 import CreateNote from '../CreateNote/CreateNote';
 import { INote } from '../../types/Note';
 
 interface IBody {
   taskList: INote[];
-  setTaskList: React.Dispatch<React.SetStateAction<INote[]>>
+  setTaskList: React.Dispatch<React.SetStateAction<INote[]>>;
+  setUpdateUI: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const Body = ({taskList, setTaskList}: IBody) => {
+const Body = ({taskList, setTaskList,setUpdateUI}: IBody) => {
 
 
   const updateNote = (id: number, title: string, note: string, color: string, favorite: boolean) => {
+    console.log(note);
     
-    const updatedNote: INote = { id, title, note, color, favorite };
-  
-    const updatedItems = taskList.map((task) => {
-      return task.id === updatedNote.id ? updatedNote : task;
-    });
-  
-    setTaskList(updatedItems);
-    console.log(taskList);
+
   }
   
   const deleteNote = (id: number) => {
-    setTaskList(
-      taskList.filter((note) =>{
-        return note.id !== id;
-      })
-    );
+    axios.delete(`${baseURL}/delete/${id}`).then((res)=>{
+      console.log(res.data);
+      setUpdateUI((prevState) => !prevState)
+    })  
+
   };
   
   return (
     <div className={styles.Container}>
       <CreateNote 
       taskList={taskList}
-      setTaskList={setTaskList}/>
+      setTaskList={setTaskList}
+      setUpdateUI={setUpdateUI}/>
 
           <div className={styles.Cards}>
             {taskList.length > 0 && (
@@ -46,13 +46,14 @@ const Body = ({taskList, setTaskList}: IBody) => {
                   <div>          
                     <Card 
                       data-favorite="true"
-                      id={note.id}
+                      id={note._id}
                       note={note.note}
                       title={note.title}
-                      color="#ffffff"
+                      color={note.color}
                       favorite={note.favorite}
                       handleDelete={deleteNote}
-                      handleNote={updateNote}                     
+                      //handleNote={updateNote} 
+                      setUpdateUI={setUpdateUI}                    
                     />
                   </div>
                 ))}
@@ -61,13 +62,13 @@ const Body = ({taskList, setTaskList}: IBody) => {
                 {taskList.filter((note) => note.favorite === false).map((note) => (
                   <div>          
                     <Card 
-                      id={note.id}
+                      id={note._id}
                       note={note.note}
                       title={note.title}
-                      color="#ffffff"
+                      color={note.color}
                       favorite={note.favorite }
                       handleDelete={deleteNote}
-                      handleNote={updateNote}                    
+                      setUpdateUI={setUpdateUI}                   
                     />
                   </div>
                 ))}

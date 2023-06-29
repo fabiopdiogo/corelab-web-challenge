@@ -6,16 +6,17 @@ module.exports.getTasks = async (req, res) => {
 }
 
 module.exports.saveTask = (req, res) => {
-  const {task} = req.body;
 
-  TaskModel.create({task})
+  const { title, note, color,favorite } = req.body;
+
+  TaskModel.create({ title, note, color,favorite})
   .then((data) =>{
     console.log("Saved Successfully");
-    res.status(201).send(data)
+    res.status(201).send(data);
   })
   .catch((err) => {
     console.log(err);
-    res.send({ error:err, msg: "Something went wrong!" })
+    res.send({ error:err, msg: "Something went lil bit wrong!" })
   })
 
 };
@@ -23,9 +24,10 @@ module.exports.saveTask = (req, res) => {
 
 module.exports.updateTask = (req, res) => {
   const {id} = req.params;
-  const {task} = req.body;
+  console.log(id)
+  const { note } = req.body;
 
-  TaskModel.findByIdAndUpdate(id, {task})
+  TaskModel.findByIdAndUpdate(id, {note})
   .then(() => res.send("Updated successfully"))
   .catch((err) => {
     console.log(err);
