@@ -5,6 +5,10 @@ import { INote } from "../../types/Note";
 import EditNote from "./EditNote"
 import ModalColor from "./ModalColor/ModalColor";
 
+import { baseURL } from "../../utils/constant";
+import axios from "axios"
+
+
 const StyledCard = styled.div`
   display: flex;
   flex-direction: column;
@@ -35,7 +39,6 @@ interface ICard{
     color:string;
     favorite:boolean;
     handleDelete(id: number): void;
-    //handleNote(id: number,string:string, note:string,color: string, favorite: boolean): void;
     setUpdateUI: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
@@ -45,6 +48,7 @@ const Card = ({ id, note, title,color,favorite,handleDelete, setUpdateUI }: ICar
   const [noteNew, setNote] = useState<string>(note);
   const [showModal, setShowModal] = useState(false);
   const [editNote, setEditNote] = useState(false);
+
 
   const handleEdit = (): void =>{
     setEditNote(true)
@@ -60,12 +64,16 @@ const Card = ({ id, note, title,color,favorite,handleDelete, setUpdateUI }: ICar
     console.log(showModal)
   };
   const handleColorSelection = (color: string) => {
-    console.log('Cor selecionada:', color);
+    
     setColorNew(color)
     setShowModal(false);
+    console.log('Cor selecionada:', color);
+    axios.put(`${baseURL}/update/color/${id}`,{color:color}).then((res)=>{
+      console.log(res.data);
+      setUpdateUI((prevState) => !prevState)
+    })  
   };
   const handleFavorite = () => {
-    //handleNote(id,title,noteNew, colorNew, favoriteNew)    
   };
 
   return (

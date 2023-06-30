@@ -23,7 +23,7 @@ const TodoList = () => {
   
   return (    
     <div className={styles.main}>
-      <Header taskList={taskList}/>
+      <Header taskList={taskList}/>      
       <Body 
         taskList={taskList}
         setTaskList={setTaskList}        

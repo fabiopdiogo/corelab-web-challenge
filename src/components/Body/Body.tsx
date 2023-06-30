@@ -1,6 +1,5 @@
 import Card from '../Card/Card';
 import styles from './Body.module.scss'
-import { Dispatch, SetStateAction, useState } from 'react';
 
 import { baseURL } from "../../utils/constant";
 import axios from "axios"
@@ -17,12 +16,6 @@ interface IBody {
 const Body = ({taskList, setTaskList,setUpdateUI}: IBody) => {
 
 
-  const updateNote = (id: number, title: string, note: string, color: string, favorite: boolean) => {
-    console.log(note);
-    
-
-  }
-  
   const deleteNote = (id: number) => {
     axios.delete(`${baseURL}/delete/${id}`).then((res)=>{
       console.log(res.data);
@@ -52,7 +45,6 @@ const Body = ({taskList, setTaskList,setUpdateUI}: IBody) => {
                       color={note.color}
                       favorite={note.favorite}
                       handleDelete={deleteNote}
-                      //handleNote={updateNote} 
                       setUpdateUI={setUpdateUI}                    
                     />
                   </div>

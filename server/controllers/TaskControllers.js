@@ -24,10 +24,21 @@ module.exports.saveTask = (req, res) => {
 
 module.exports.updateTask = (req, res) => {
   const {id} = req.params;
-  console.log(id)
   const { note } = req.body;
 
   TaskModel.findByIdAndUpdate(id, {note})
+  .then(() => res.send("Updated successfully"))
+  .catch((err) => {
+    console.log(err);
+    res.send({ error: err, msg: "Something went wrong!" })
+  });
+};
+
+module.exports.updateColor = (req, res) => {
+  const {id} = req.params;
+  const { color } = req.body;
+
+  TaskModel.findByIdAndUpdate(id, {color})
   .then(() => res.send("Updated successfully"))
   .catch((err) => {
     console.log(err);
