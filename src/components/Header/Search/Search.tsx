@@ -36,11 +36,12 @@ const searchNote = (e: ChangeEvent<HTMLFormElement>) => {
   return (
     <form  onSubmit={searchNote} className={styles.searchBar}>      
       <input 
-        type="text" 
-        name="title" 
-        placeholder="Pesquisar notas"
-        onChange={handleChange}
-        value={title}/> 
+          type="text" 
+          name="title" 
+          placeholder="Pesquisar notas"
+          onChange={handleChange}
+          value={title}
+        /> 
       <button type="submit">
         <img src="search.svg" alt="Lupa" />
       </button>   

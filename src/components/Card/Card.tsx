@@ -27,6 +27,10 @@ const StyledCard = styled.div`
   border-radius: 25px;
   box-shadow: 1px 1px #808080;
 
+  @media (max-width:415px){
+    width: 230px;
+    height: 337.5882568359375px;
+  }
 
   img{
     cursor: pointer;

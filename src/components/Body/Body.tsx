@@ -36,8 +36,8 @@ const Body = ({taskList, setTaskList,setUpdateUI}: IBody) => {
               <>
                 {/* Mapear notas favoritas */}
                 {taskList.filter((note) => note.favorite === true).map((note) => (
-                  <div>          
-                    <Card 
+                  <div > 
+                     <Card 
                       data-favorite="true"
                       id={note._id}
                       note={note.note}
@@ -52,7 +52,7 @@ const Body = ({taskList, setTaskList,setUpdateUI}: IBody) => {
 
                 {/* Mapear notas não favoritas */}
                 {taskList.filter((note) => note.favorite === false).map((note) => (
-                  <div>          
+                  <div>           
                     <Card 
                       id={note._id}
                       note={note.note}
